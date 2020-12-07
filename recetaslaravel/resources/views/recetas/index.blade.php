@@ -30,13 +30,19 @@
         </thead>
 
         <tbody>
+            @foreach($recetas as $receta)
             <tr>
-                <td>Pizzas</td>
-                <td>Pizzas</td>
+                <td>{{$receta->titulo}}</td>
+                <td>{{$receta->categoria->nombre}}</td>
                 <td>
-                    <button class="btn">ver mas..</button>
+                    <eliminar-receta receta-id={{$receta->id}}></eliminar-receta>
+
+                    <a href="{{route('recetas.edit', ['receta'=> $receta->id]) }}" class="btn btn-dark d-block mb-2">Editar</a>
+                    <a href="{{route('recetas.show', ['receta'=> $receta->id]) }}" class="btn btn-success d-block mb-2">Ver</a>
                 </td>
             </tr>
+            @endforeach
+
         </tbody>
     </table>
 
