@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+// controller
+use App\Http\Controllers\VacanteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify'=> true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Rutas de Vacantes
+
+Route::get('/vacantes', [VacanteController::class, 'index'])->name('vacantes.index');
