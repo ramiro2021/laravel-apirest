@@ -29,7 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/vacantes', [VacanteController::class, 'index'])->name('vacantes.index');
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->name('vacantes.create');
-
+Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
 
 
 // Subir Imagenes

@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\File;
 class VacanteController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->middleware(['auth', 'verified']);
     }
@@ -43,10 +44,10 @@ class VacanteController extends Controller
         $salarios = Salario::all();
 
         return View('vacantes.create')
-                    ->with('categorias', $categorias)
-                    ->with('experiencias', $experiencias)
-                    ->with('ubicaciones', $ubicaciones)
-                    ->with('salarios', $salarios);
+            ->with('categorias', $categorias)
+            ->with('experiencias', $experiencias)
+            ->with('ubicaciones', $ubicaciones)
+            ->with('salarios', $salarios);
     }
 
     /**
@@ -57,7 +58,31 @@ class VacanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'titulo' => 'required|min:6',
+            'categoria' => 'required',
+            'experiencia' => 'required',
+            'ubicacion' => 'required',
+            'salario' => 'required',
+            'descripcion' => 'required|min:50',
+            'imagen' => 'required',
+            'skills' => 'required|min:6'
+
+        ]);
+
+        //Almacenar en la BD
+        auth()->user()->vacantes()->create([
+            'titulo' => $data['titulo'],
+            'categoria_id' => $data['categoria'],
+            'experiencia_id' => $data['experiencia'],
+            'ubicacion_id' => $data['ubicacion'],
+            'salario_id' => $data['salario'],
+            'descripcion' => $data['descripcion'],
+            'imagen' => $data['imagen'],
+            'skills' => $data['skills'],
+        ]);
+
+        return redirect()->action([VacanteController::class, 'index']);
     }
 
     /**
@@ -106,25 +131,25 @@ class VacanteController extends Controller
     }
 
 
-    public function imagen(Request $request){
+    public function imagen(Request $request)
+    {
         $imagen = $request->file('file');
         $nombreImagen = time() . '.' . $imagen->extension();
         $imagen->move(public_path('storage/vacantes'), $nombreImagen);
         return response()->json(['correcto' => $nombreImagen]);
     }
 
-    public function borrarimagen(Request $request){
+    public function borrarimagen(Request $request)
+    {
         if ($request->ajax()) {
             $imagen =  $request->get('imagen');
             if (File::exists('storage/vacantes/' . $imagen)) {
 
                 File::delete('storage/vacantes/' . $imagen);
-
             }
 
 
-            return response ('Imagen Eliminada', 200);
+            return response('Imagen Eliminada', 200);
         }
     }
-
 }
