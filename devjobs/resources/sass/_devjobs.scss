@@ -51,3 +51,13 @@
         color: #666;
     }
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    gap: 1rem;
+    .page-link {
+        font-size: 0.8rem;
+    }
+}

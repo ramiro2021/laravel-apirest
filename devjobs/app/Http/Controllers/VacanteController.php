@@ -15,8 +15,6 @@ class VacanteController extends Controller
 
     public function __construct()
     {
-
-        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -26,8 +24,11 @@ class VacanteController extends Controller
      */
     public function index()
     {
-        //
-        return View('vacantes.index');
+        // $vacantes = auth()->user()->vacantes;
+
+        $vacantes = Vacante::where('user_id', auth()->user()->id)->simplePaginate(10);
+
+        return View('vacantes.index', compact('vacantes'));
     }
 
     /**
@@ -93,7 +94,7 @@ class VacanteController extends Controller
      */
     public function show(Vacante $vacante)
     {
-        //
+        return view('vacantes.show')->with('vacante', $vacante);
     }
 
     /**

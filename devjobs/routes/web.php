@@ -21,18 +21,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify'=> true]);
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Rutas de Vacantes
+// Rutas protegidas
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/vacantes', [VacanteController::class, 'index'])->name('vacantes.index');
+    Route::get('/vacantes/create', [VacanteController::class, 'create'])->name('vacantes.create');
+    Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
 
-Route::get('/vacantes', [VacanteController::class, 'index'])->name('vacantes.index');
-Route::get('/vacantes/create', [VacanteController::class, 'create'])->name('vacantes.create');
-Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
+    // Subir Imagenes
 
+    Route::post('/vacantes/imagen', [VacanteController::class, 'imagen'])->name('vacantes.imagen');
+    Route::post('/vacantes/borrarimagen', [VacanteController::class, 'borrarimagen'])->name('vacantes.borrar');
+});
 
-// Subir Imagenes
-
-Route::post('/vacantes/imagen', [VacanteController::class, 'imagen'])->name('vacantes.imagen');
-Route::post('/vacantes/borrarimagen', [VacanteController::class, 'borrarimagen'] )->name('vacantes.borrar');
+// get one sin middleware de auth
+Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');

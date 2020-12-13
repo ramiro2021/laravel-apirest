@@ -31248,6 +31248,17 @@ video {
   color: #666;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 1rem;
+}
+
+.pagination .page-link {
+  font-size: 0.8rem;
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;
