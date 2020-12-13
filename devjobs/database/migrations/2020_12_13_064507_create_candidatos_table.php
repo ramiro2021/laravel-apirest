@@ -15,6 +15,10 @@ class CreateCandidatosTable extends Migration
     {
         Schema::create('candidatos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('email');
+            $table->string('cv');
+            $table->string('vacante_id')->constrained();
             $table->timestamps();
         });
     }

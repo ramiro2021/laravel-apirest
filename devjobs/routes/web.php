@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // controller
 use App\Http\Controllers\VacanteController;
+use App\Http\Controllers\CandidatoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 // get one sin middleware de auth
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
+
+// Enviar datos para una vacante (cv nombre email)
+Route::post('/candidatos/store', [CandidatoController::class, 'store'])->name('candidato.store');
