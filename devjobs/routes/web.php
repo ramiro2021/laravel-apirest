@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 // controller
 use App\Http\Controllers\VacanteController;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\NotificacionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +35,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
 
     // Subir Imagenes
-
     Route::post('/vacantes/imagen', [VacanteController::class, 'imagen'])->name('vacantes.imagen');
     Route::post('/vacantes/borrarimagen', [VacanteController::class, 'borrarimagen'])->name('vacantes.borrar');
+
+    // Notificaciones
+    Route::get('/notificaciones', NotificacionesController::class)->name('notificaciones');
 });
 
 // get one sin middleware de auth

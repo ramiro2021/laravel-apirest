@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vacante;
 use App\Models\Candidato;
 use Illuminate\Http\Request;
+use App\Notifications\NuevoCandidato;
 
 class CandidatoController extends Controller
 {
@@ -60,6 +61,9 @@ class CandidatoController extends Controller
             'email' => $data['email'],
             'cv' => $nombreArchivo
         ]);
+
+        $reclutador = $vacante->reclutador;
+        $reclutador->notify(new NuevoCandidato($vacante->titulo));
 
         // $candidato = new Candidato($data);
         // $candidato->cv = "123.pdf";
