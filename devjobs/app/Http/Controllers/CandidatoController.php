@@ -14,9 +14,18 @@ class CandidatoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        // obtener id por params
+        // dd($request->route('id'));
+        $id_vacante = $request->route('id');
+
+        //Obtener los candidatos y la vacante
+        $vacante = Vacante::findOrFail($id_vacante);
+
+
+        return view('candidatos.index', compact('vacante'));
     }
 
     /**
@@ -63,7 +72,7 @@ class CandidatoController extends Controller
         ]);
 
         $reclutador = $vacante->reclutador;
-        $reclutador->notify(new NuevoCandidato($vacante->titulo));
+        $reclutador->notify(new NuevoCandidato($vacante->titulo, $vacante->id));
 
         // $candidato = new Candidato($data);
         // $candidato->cv = "123.pdf";

@@ -128,7 +128,8 @@ class VacanteController extends Controller
      */
     public function destroy(Vacante $vacante)
     {
-        //
+        $vacante->delete();
+        return response()->json(['mensaje' => 'Se elimino la vacante ' . $vacante->titulo]);
     }
 
 
@@ -152,5 +153,16 @@ class VacanteController extends Controller
 
             return response('Imagen Eliminada', 200);
         }
+    }
+
+    public function estado(Request $request, Vacante $vacante)
+    {
+        //Lerr nuevo estado y asignarlo
+        $vacante->activa = $request->estado;
+
+        // guardarlo en la BD
+        $vacante->save();
+
+        return response()->json(['respuesta' => 'Correcto']);
     }
 }

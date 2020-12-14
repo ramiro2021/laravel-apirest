@@ -33,10 +33,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/vacantes', [VacanteController::class, 'index'])->name('vacantes.index');
     Route::get('/vacantes/create', [VacanteController::class, 'create'])->name('vacantes.create');
     Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
+    Route::delete('/vacantes/{vacante}', [VacanteController::class, 'destroy'])->name('vacantes.destroy');
 
     // Subir Imagenes
     Route::post('/vacantes/imagen', [VacanteController::class, 'imagen'])->name('vacantes.imagen');
     Route::post('/vacantes/borrarimagen', [VacanteController::class, 'borrarimagen'])->name('vacantes.borrar');
+
+    // Cambiar estado de la vacante
+    Route::post('/vacantes/{vacante}', [VacanteController::class, 'estado'])->name('vacantes.estado');
 
     // Notificaciones
     Route::get('/notificaciones', NotificacionesController::class)->name('notificaciones');
@@ -46,4 +50,5 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
 
 // Enviar datos para una vacante (cv nombre email)
-Route::post('/candidatos/store', [CandidatoController::class, 'store'])->name('candidato.store');
+Route::get('/candidatos/{id}',  [CandidatoController::class, 'index'])->name('candidatos.index');
+Route::post('/candidatos/store', [CandidatoController::class, 'store'])->name('candidatos.store');

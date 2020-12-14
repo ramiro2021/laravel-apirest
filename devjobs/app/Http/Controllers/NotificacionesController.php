@@ -17,6 +17,7 @@ class NotificacionesController extends Controller
     {
         $notificaciones = auth()->user()->unreadNotifications;
         auth()->user()->unreadNotifications->markAsRead();
-        return View('notificaciones.index', compact('notificaciones'));
+        $notificacionesAll = auth()->user()->notifications()->simplePaginate(10);
+        return View('notificaciones.index', compact('notificaciones', 'notificacionesAll'));
     }
 }
