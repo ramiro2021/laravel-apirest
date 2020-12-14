@@ -105,7 +105,17 @@ class VacanteController extends Controller
      */
     public function edit(Vacante $vacante)
     {
-        //
+        // policy para verificar que solo el usuario q creo la vacante pueda ver el edit
+        $this->authorize('view', $vacante);
+
+        // consultas
+        $categorias = Categoria::all();
+        $experiencias = Experiencia::all();
+        $ubicaciones = Ubicacion::all();
+        $salarios = Salario::all();
+
+
+        return view('vacantes.edit', compact('vacante', 'categorias', 'experiencias', 'ubicaciones', 'salarios'));
     }
 
     /**
@@ -117,7 +127,34 @@ class VacanteController extends Controller
      */
     public function update(Request $request, Vacante $vacante)
     {
-        //
+
+        // policy para verificar que solo el usuario q creo la vacante pueda editar
+        $this->authorize('update', $vacante);
+
+        $data = $request->validate([
+            'titulo' => 'required|min:6',
+            'categoria' => 'required',
+            'experiencia' => 'required',
+            'ubicacion' => 'required',
+            'salario' => 'required',
+            'descripcion' => 'required|min:50',
+            'imagen' => 'required',
+            'skills' => 'required|min:6'
+
+        ]);
+
+        $vacante->titulo = $data['titulo'];
+        $vacante->categoria_id = $data['categoria'];
+        $vacante->experiencia_id = $data['experiencia'];
+        $vacante->ubicacion_id = $data['ubicacion'];
+        $vacante->salario_id = $data['salario'];
+        $vacante->descripcion = $data['descripcion'];
+        $vacante->imagen = $data['imagen'];
+        $vacante->skills = $data['skills'];
+
+        $vacante->save();
+
+        return redirect()->action([VacanteController::class, 'index']);
     }
 
     /**
@@ -128,6 +165,9 @@ class VacanteController extends Controller
      */
     public function destroy(Vacante $vacante)
     {
+        // policy para verificar que solo el usuario q creo la vacante pueda eliminar
+        $this->authorize('delete', $vacante);
+
         $vacante->delete();
         return response()->json(['mensaje' => 'Se elimino la vacante ' . $vacante->titulo]);
     }

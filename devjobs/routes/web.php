@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // controller
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\VacanteController;
 use App\Http\Controllers\CandidatoController;
 use App\Http\Controllers\NotificacionesController;
@@ -19,13 +20,10 @@ use App\Http\Controllers\NotificacionesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Rutas de Vacantes
 // Rutas protegidas
@@ -34,6 +32,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/vacantes/create', [VacanteController::class, 'create'])->name('vacantes.create');
     Route::post('/vacantes', [VacanteController::class, 'store'])->name('vacantes.store');
     Route::delete('/vacantes/{vacante}', [VacanteController::class, 'destroy'])->name('vacantes.destroy');
+    Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->name('vacantes.edit');
+    Route::put('/vacantes/{vacante}', [VacanteController::class, 'update'])->name('vacantes.update');
 
     // Subir Imagenes
     Route::post('/vacantes/imagen', [VacanteController::class, 'imagen'])->name('vacantes.imagen');
@@ -52,3 +52,6 @@ Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vac
 // Enviar datos para una vacante (cv nombre email)
 Route::get('/candidatos/{id}',  [CandidatoController::class, 'index'])->name('candidatos.index');
 Route::post('/candidatos/store', [CandidatoController::class, 'store'])->name('candidatos.store');
+
+// Pagina de inicio
+Route::get('/', InicioController::class)->name('inicio');
