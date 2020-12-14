@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\VacanteController;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\NotificacionesController;
 
 /*
@@ -46,6 +47,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/notificaciones', NotificacionesController::class)->name('notificaciones');
 });
 
+
+// buscador de bacantes en inicio
+Route::post('/buscarvacantes/buscar', [VacanteController::class, 'buscar'])->name('vacantes.buscar');
+Route::get('/buscarvacantes/buscar', [VacanteController::class, 'resultados'])->name('vacantes.resultados');
 // get one sin middleware de auth
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
 
@@ -55,3 +60,5 @@ Route::post('/candidatos/store', [CandidatoController::class, 'store'])->name('c
 
 // Pagina de inicio
 Route::get('/', InicioController::class)->name('inicio');
+// Categorias
+Route::get('/categorias/{categoria}', [CategoriaController::class, 'show'])->name('categorias.show');

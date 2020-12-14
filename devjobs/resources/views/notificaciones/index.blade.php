@@ -51,7 +51,7 @@
                 Te escribio hace : <br> <span class="font-bold">{{ $notificacion->created_at->diffForHumans() }}</span>
            </p>
 
-            <a class="bg-blue-300 text-black hover:bg-blue-800 p-3 inline-block text-xs font-bold uppercase hover:text-white" href="{{ route('candidatos.index', ['id'=> $data['id_vacante']] ) }}">
+            <a class="bg-transparent border rounded border-gray-100  text-black hover:bg-white p-3 inline-block text-xs font-bold uppercase" href="{{ route('candidatos.index', ['id'=> $data['id_vacante']] ) }}">
                 Ver candidatos
                 </a>
           </li>

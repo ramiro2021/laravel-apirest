@@ -14,7 +14,8 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     @yield('styles')
 
@@ -54,8 +55,10 @@
 
                             @endif
                         @else
+                             <a href="{{ route('vacantes.index') }}">
 
-                              <span class="text-gray-300 text-sm pr-4">  {{ Auth::user()->name }}</span>
+                                <span class="text-gray-300 text-sm pr-4">  {{ Auth::user()->name }}</span>
+                            </a>
 
                               <a href="{{ route('notificaciones') }}"
                               class="bg-blue-500 rounded-full mr-2 px-3 py-1 font-bold text-sm text-white"
@@ -80,7 +83,7 @@
         </nav>
 
         <div class="bg-gray-700">
-            <nav class="container mx-auto flex space-x-1">
+            <nav class="container mx-auto flex flex-col text-center md:flex-row space-x-1">
                 @yield('navegacion')
             </nav>
         </div>
